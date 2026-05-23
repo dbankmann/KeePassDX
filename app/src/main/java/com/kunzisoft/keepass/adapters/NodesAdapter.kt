@@ -46,6 +46,7 @@ import com.kunzisoft.keepass.database.element.node.Node
 import com.kunzisoft.keepass.database.element.node.NodeVersionedInterface
 import com.kunzisoft.keepass.database.element.node.Type
 import com.kunzisoft.keepass.database.element.template.TemplateField
+import com.kunzisoft.keepass.database.keeshare.KeeShareReference
 import com.kunzisoft.keepass.database.helper.getLocalizedName
 import com.kunzisoft.keepass.otp.OtpElement
 import com.kunzisoft.keepass.otp.OtpType
@@ -525,6 +526,12 @@ class NodesAdapter (
             } else {
                 holder.numberChildren?.visibility = View.GONE
             }
+            holder.keeShareIcon?.apply {
+                val group = subNode as Group
+                visibility = if (KeeShareReference.fromCustomData(group.customData) != null)
+                    View.VISIBLE else View.GONE
+                setColorFilter(iconColor)
+            }
         }
 
         // Assign image
@@ -651,6 +658,7 @@ class NodesAdapter (
         var numberChildren: TextView? = itemView.findViewById(R.id.node_child_numbers)
         var attachmentIcon: ImageView? = itemView.findViewById(R.id.node_attachment_icon)
         var passkeyIcon: ImageView? = itemView.findViewById(R.id.node_passkey_icon)
+        var keeShareIcon: ImageView? = itemView.findViewById(R.id.node_keeshare_icon)
     }
 
     companion object {
